@@ -1,30 +1,30 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { apiService } from "./api"
-export const signup_post_api_v1_signup_read = createAsyncThunk(
-  "signup_response_post_Signups/signup_post_api_v1_signup_read",
+export const events_get_categories_list = createAsyncThunk(
+  "events_response_get_ListCategories/events_get_categories_list",
   async payload => {
-    const response = await apiService.signup_post_api_v1_signup_read(payload)
+    const response = await apiService.events_get_categories_list(payload)
     return response.data
   }
 )
 const initialState = { entities: [], api: { loading: "idle", error: null } }
-const signup_response_post_SignupsSlice = createSlice({
-  name: "signup_response_post_Signups",
+const events_response_get_ListCategoriesSlice = createSlice({
+  name: "events_response_get_ListCategories",
   initialState,
   reducers: {},
   extraReducers: {
-    [signup_post_api_v1_signup_read.pending]: (state, action) => {
+    [events_get_categories_list.pending]: (state, action) => {
       if (state.api.loading === "idle") {
         state.api.loading = "pending"
       }
     },
-    [signup_post_api_v1_signup_read.fulfilled]: (state, action) => {
+    [events_get_categories_list.fulfilled]: (state, action) => {
       if (state.api.loading === "pending") {
-        state.entities.push(action.payload)
+        state.entities = action.payload
         state.api.loading = "idle"
       }
     },
-    [signup_post_api_v1_signup_read.rejected]: (state, action) => {
+    [events_get_categories_list.rejected]: (state, action) => {
       if (state.api.loading === "pending") {
         state.api.error = action.error
         state.api.loading = "idle"
@@ -33,6 +33,6 @@ const signup_response_post_SignupsSlice = createSlice({
   }
 })
 export default {
-  signup_post_api_v1_signup_read,
-  slice: signup_response_post_SignupsSlice
+  events_get_categories_list,
+  slice: events_response_get_ListCategoriesSlice
 }
